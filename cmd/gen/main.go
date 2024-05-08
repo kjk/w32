@@ -26,6 +26,10 @@ func main() {
 		runLoggedMust(cmd)
 	}
 	{
+		cmd := exec.Command("gofmt", "-s", "-w", ".")
+		runLoggedMust(cmd)
+	}
+	{
 		cmd := exec.Command("go", "test", ".")
 		runLoggedMust(cmd)
 	}

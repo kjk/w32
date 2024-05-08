@@ -14,6 +14,34 @@ function len(o) {
 let curr;
 let skipped;
 
+// capitalize the first letter of each word and lower the rest
+function capitalize(s) {
+  const s2 = s.toLowerCase();
+  return s2.charAt(0).toUpperCase() + s2.slice(1);
+}
+
+// convert "SECURITY_ATTRIBUTES" => "SecurityAttributes"
+// this is naming in Go syscall package
+function toCamelCase(str) {
+  const words = str.split("_");
+  let n = len(words);
+  for (let i = 0; i < n; i++) {
+    words[i] = capitalize(words[i]);
+  }
+  return words.join("");
+}
+
+function assertEq(v1, v2) {
+  if (v1 === v2) {
+    return;
+  }
+  throw new Error(`'${v1}' !== '${v2}'`);
+}
+
+function tests() {
+  assertEq("SecurityAttributes", toCamelCase("SECURITY_ATTRIBUTES"));
+}
+
 /*
 Platform frequency (if not null)
 windows6.0.6000 : 1023
@@ -369,6 +397,8 @@ async function process_all_files() {
     process_file(name);
   }
 }
+
+tests();
 
 if (true) {
   await process_file("Foundation.json");
