@@ -3,6 +3,313 @@ import { readdir } from "node:fs/promises";
 // this is location of local checkout of https://github.com/marlersoft/win32json
 let win32jsonDir = "..\\win32json\\api";
 
+const files = [
+  // "AI.MachineLearning.DirectML.json"
+  // "AI.MachineLearning.WinML.json"
+  // "Data.HtmlHelp.json"
+  // "Data.RightsManagement.json"
+  // "Data.Xml.MsXml.json"
+  // "Data.Xml.XmlLite.json"
+  // "Devices.AllJoyn.json"
+  // "Devices.BiometricFramework.json"
+  // "Devices.Bluetooth.json"
+  // "Devices.Communication.json"
+  // "Devices.DeviceAccess.json"
+  // "Devices.DeviceAndDriverInstallation.json"
+  // "Devices.DeviceQuery.json"
+  // "Devices.Display.json"
+  // "Devices.Enumeration.Pnp.json"
+  // "Devices.Fax.json"
+  // "Devices.FunctionDiscovery.json"
+  // "Devices.Geolocation.json"
+  // "Devices.HumanInterfaceDevice.json"
+  // "Devices.ImageAcquisition.json"
+  // "Devices.PortableDevices.json"
+  // "Devices.Properties.json"
+  // "Devices.Pwm.json"
+  // "Devices.Sensors.json"
+  // "Devices.SerialCommunication.json"
+  // "Devices.Tapi.json"
+  // "Devices.Usb.json"
+  // "Devices.WebServicesOnDevices.json"
+  "Foundation.json",
+  // "Gaming.json"
+  // "Globalization.json"
+  // "Graphics.CompositionSwapchain.json"
+  // "Graphics.Direct2D.Common.json"
+  // "Graphics.Direct2D.json"
+  // "Graphics.Direct3D.Dxc.json"
+  // "Graphics.Direct3D.Fxc.json"
+  // "Graphics.Direct3D.json"
+  // "Graphics.Direct3D10.json"
+  // "Graphics.Direct3D11.json"
+  // "Graphics.Direct3D11on12.json"
+  // "Graphics.Direct3D12.json"
+  // "Graphics.Direct3D9.json"
+  // "Graphics.Direct3D9on12.json"
+  // "Graphics.DirectComposition.json"
+  // "Graphics.DirectDraw.json"
+  // "Graphics.DirectManipulation.json"
+  // "Graphics.DirectWrite.json"
+  // "Graphics.Dwm.json"
+  // "Graphics.DXCore.json"
+  // "Graphics.Dxgi.Common.json"
+  // "Graphics.Dxgi.json"
+  // "Graphics.Gdi.json"
+  // "Graphics.Hlsl.json"
+  // "Graphics.Imaging.D2D.json"
+  // "Graphics.Imaging.json"
+  // "Graphics.OpenGL.json"
+  // "Graphics.Printing.json"
+  // "Graphics.Printing.PrintTicket.json"
+  // "Management.MobileDeviceManagementRegistration.json"
+  // "Media.Audio.Apo.json"
+  // "Media.Audio.DirectMusic.json"
+  // "Media.Audio.DirectSound.json"
+  // "Media.Audio.Endpoints.json"
+  // "Media.Audio.json"
+  // "Media.Audio.XAudio2.json"
+  // "Media.DeviceManager.json"
+  // "Media.DirectShow.json"
+  // "Media.DirectShow.Xml.json"
+  // "Media.DxMediaObjects.json"
+  // "Media.json"
+  // "Media.KernelStreaming.json"
+  // "Media.LibrarySharingServices.json"
+  // "Media.MediaFoundation.json"
+  // "Media.MediaPlayer.json"
+  // "Media.Multimedia.json"
+  // "Media.PictureAcquisition.json"
+  // "Media.Speech.json"
+  // "Media.Streaming.json"
+  // "Media.WindowsMediaFormat.json"
+  // "Networking.ActiveDirectory.json"
+  // "Networking.BackgroundIntelligentTransferService.json"
+  // "Networking.Clustering.json"
+  // "Networking.HttpServer.json"
+  // "Networking.Ldap.json"
+  // "Networking.NetworkListManager.json"
+  // "Networking.RemoteDifferentialCompression.json"
+  // "Networking.WebSocket.json"
+  // "Networking.WindowsWebServices.json"
+  // "Networking.WinHttp.json"
+  // "Networking.WinInet.json"
+  // "Networking.WinSock.json"
+  // "NetworkManagement.Dhcp.json"
+  // "NetworkManagement.Dns.json"
+  // "NetworkManagement.InternetConnectionWizard.json"
+  // "NetworkManagement.IpHelper.json"
+  // "NetworkManagement.MobileBroadband.json"
+  // "NetworkManagement.Multicast.json"
+  // "NetworkManagement.Ndis.json"
+  // "NetworkManagement.NetBios.json"
+  // "NetworkManagement.NetManagement.json"
+  // "NetworkManagement.NetShell.json"
+  // "NetworkManagement.NetworkDiagnosticsFramework.json"
+  // "NetworkManagement.NetworkPolicyServer.json"
+  // "NetworkManagement.P2P.json"
+  // "NetworkManagement.QoS.json"
+  // "NetworkManagement.Rras.json"
+  // "NetworkManagement.Snmp.json"
+  // "NetworkManagement.WebDav.json"
+  // "NetworkManagement.WiFi.json"
+  // "NetworkManagement.WindowsConnectionManager.json"
+  // "NetworkManagement.WindowsConnectNow.json"
+  // "NetworkManagement.WindowsFilteringPlatform.json"
+  // "NetworkManagement.WindowsFirewall.json"
+  // "NetworkManagement.WindowsNetworkVirtualization.json"
+  // "NetworkManagement.WNet.json"
+  // "Security.AppLocker.json"
+  // "Security.Authentication.Identity.json"
+  // "Security.Authentication.Identity.Provider.json"
+  // "Security.Authorization.json"
+  // "Security.Authorization.UI.json"
+  // "Security.ConfigurationSnapin.json"
+  // "Security.Credentials.json"
+  // "Security.Cryptography.Catalog.json"
+  // "Security.Cryptography.Certificates.json"
+  // "Security.Cryptography.json"
+  // "Security.Cryptography.Sip.json"
+  // "Security.Cryptography.UI.json"
+  // "Security.DiagnosticDataQuery.json"
+  // "Security.DirectoryServices.json"
+  // "Security.EnterpriseData.json"
+  // "Security.ExtensibleAuthenticationProtocol.json"
+  // "Security.Isolation.json"
+  // "Security.json"
+  // "Security.LicenseProtection.json"
+  // "Security.NetworkAccessProtection.json"
+  // "Security.Tpm.json"
+  // "Security.WinTrust.json"
+  // "Security.WinWlx.json"
+  // "Storage.Cabinets.json"
+  // "Storage.CloudFilters.json"
+  // "Storage.Compression.json"
+  // "Storage.DataDeduplication.json"
+  // "Storage.DistributedFileSystem.json"
+  // "Storage.EnhancedStorage.json"
+  // "Storage.FileHistory.json"
+  // "Storage.FileServerResourceManager.json"
+  // "Storage.FileSystem.json"
+  // "Storage.Imapi.json"
+  // "Storage.IndexServer.json"
+  // "Storage.InstallableFileSystems.json"
+  // "Storage.IscsiDisc.json"
+  // "Storage.Jet.json"
+  // "Storage.OfflineFiles.json"
+  // "Storage.OperationRecorder.json"
+  // "Storage.Packaging.Appx.json"
+  // "Storage.Packaging.Opc.json"
+  // "Storage.ProjectedFileSystem.json"
+  // "Storage.StructuredStorage.json"
+  // "Storage.Vhd.json"
+  // "Storage.VirtualDiskService.json"
+  // "Storage.Vss.json"
+  // "Storage.Xps.json"
+  // "Storage.Xps.Printing.json"
+  // "System.AddressBook.json"
+  // "System.Antimalware.json"
+  // "System.ApplicationInstallationAndServicing.json"
+  // "System.ApplicationVerifier.json"
+  // "System.AssessmentTool.json"
+  // "System.Com.CallObj.json"
+  // "System.Com.ChannelCredentials.json"
+  // "System.Com.Events.json"
+  // "System.Com.json"
+  // "System.Com.Marshal.json"
+  // "System.Com.StructuredStorage.json"
+  // "System.Com.UI.json"
+  // "System.Com.Urlmon.json"
+  // "System.ComponentServices.json"
+  // "System.Console.json"
+  // "System.Contacts.json"
+  // "System.CorrelationVector.json"
+  // "System.DataExchange.json"
+  // "System.DeploymentServices.json"
+  // "System.DesktopSharing.json"
+  // "System.DeveloperLicensing.json"
+  // "System.Diagnostics.Ceip.json"
+  // "System.Diagnostics.Debug.json"
+  // "System.Diagnostics.Debug.WebApp.json"
+  // "System.Diagnostics.Etw.json"
+  // "System.Diagnostics.ProcessSnapshotting.json"
+  // "System.Diagnostics.ToolHelp.json"
+  // "System.DistributedTransactionCoordinator.json"
+  // "System.Environment.json"
+  // "System.ErrorReporting.json"
+  // "System.EventCollector.json"
+  // "System.EventLog.json"
+  // "System.EventNotificationService.json"
+  // "System.GroupPolicy.json"
+  // "System.HostCompute.json"
+  // "System.HostComputeNetwork.json"
+  // "System.HostComputeSystem.json"
+  // "System.Hypervisor.json"
+  // "System.Iis.json"
+  // "System.IO.json"
+  // "System.Ioctl.json"
+  // "System.JobObjects.json"
+  // "System.Js.json"
+  // "System.Kernel.json"
+  // "System.LibraryLoader.json"
+  // "System.Mailslots.json"
+  // "System.Mapi.json"
+  "System.Memory.json",
+  // "System.Memory.NonVolatile.json"
+  // "System.MessageQueuing.json"
+  // "System.MixedReality.json"
+  // "System.Mmc.json"
+  // "System.Ole.json"
+  // "System.ParentalControls.json"
+  // "System.PasswordManagement.json"
+  // "System.Performance.HardwareCounterProfiling.json"
+  // "System.Performance.json"
+  // "System.Pipes.json"
+  // "System.Power.json"
+  // "System.ProcessStatus.json"
+  // "System.RealTimeCommunications.json"
+  // "System.Recovery.json"
+  // "System.Registry.json"
+  // "System.RemoteAssistance.json"
+  // "System.RemoteDesktop.json"
+  // "System.RemoteManagement.json"
+  // "System.RestartManager.json"
+  // "System.Restore.json"
+  // "System.Rpc.json"
+  // "System.Search.Common.json"
+  // "System.Search.json"
+  // "System.SecurityCenter.json"
+  // "System.ServerBackup.json"
+  // "System.Services.json"
+  // "System.SettingsManagementInfrastructure.json"
+  // "System.SetupAndMigration.json"
+  // "System.Shutdown.json"
+  // "System.SideShow.json"
+  // "System.StationsAndDesktops.json"
+  // "System.SubsystemForLinux.json"
+  // "System.SystemInformation.json"
+  // "System.SystemServices.json"
+  // "System.TaskScheduler.json"
+  // "System.Threading.json"
+  // "System.Time.json"
+  // "System.TpmBaseServices.json"
+  // "System.TransactionServer.json"
+  // "System.UpdateAgent.json"
+  // "System.UpdateAssessment.json"
+  // "System.UserAccessLogging.json"
+  // "System.VirtualDosMachines.json"
+  "System.WindowsProgramming.json",
+  // "System.WindowsSync.json"
+  // "System.WinRT.AllJoyn.json"
+  // "System.WinRT.Composition.json"
+  // "System.WinRT.CoreInputView.json"
+  // "System.WinRT.Direct3D11.json"
+  // "System.WinRT.Display.json"
+  // "System.WinRT.Graphics.Capture.json"
+  // "System.WinRT.Graphics.Direct2D.json"
+  // "System.WinRT.Graphics.Imaging.json"
+  // "System.WinRT.Holographic.json"
+  // "System.WinRT.Isolation.json"
+  // "System.WinRT.json"
+  // "System.WinRT.Media.json"
+  // "System.WinRT.ML.json"
+  // "System.WinRT.Pdf.json"
+  // "System.WinRT.Printing.json"
+  // "System.WinRT.Shell.json"
+  // "System.WinRT.Storage.json"
+  // "System.WinRT.Xaml.json"
+  // "System.Wmi.json"
+  // "UI.Accessibility.json"
+  // "UI.Animation.json"
+  // "UI.ColorSystem.json"
+  // "UI.Controls.Dialogs.json"
+  // "UI.Controls.json"
+  // "UI.Controls.RichEdit.json"
+  // "UI.HiDpi.json"
+  // "UI.Input.Ime.json"
+  // "UI.Input.Ink.json"
+  // "UI.Input.json"
+  // "UI.Input.KeyboardAndMouse.json"
+  // "UI.Input.Pointer.json"
+  // "UI.Input.Radial.json"
+  // "UI.Input.Touch.json"
+  // "UI.Input.XboxController.json"
+  // "UI.InteractionContext.json"
+  // "UI.LegacyWindowsEnvironmentFeatures.json"
+  // "UI.Magnification.json"
+  // "UI.Notifications.json"
+  // "UI.Ribbon.json"
+  // "UI.Shell.Common.json"
+  // "UI.Shell.json"
+  // "UI.Shell.PropertiesSystem.json"
+  // "UI.TabletPC.json"
+  // "UI.TextServices.json"
+  // "UI.WindowsAndMessaging.json"
+  // "UI.Wpf.json"
+  // "UI.Xaml.Diagnostics.json"
+  // "Web.MsHtml.json"
+];
+
 function len(o) {
   if (o) {
     return o.length;
@@ -150,10 +457,11 @@ function getGoValueType(vt) {
       return "float32";
     case "Double":
       return "float64";
+    case "String":
+      return "string";
     default:
       throw new Error(`ValueType '${vt}' not yet supported`);
     //case "PropertyKey":
-    //case "String":
     // not supported yet
   }
 }
@@ -233,6 +541,17 @@ function get_const_type(t) {
   }
 }
 
+/*
+"d20beec4-5ca8-4905-ae3b-bf251ea09b53"
+=>
+GUID{0xd20beec4, 0x5ca8, 0x4905, [8]byte{0xae, 0x3b, 0xbf, 0x25, 0x1e, 0xa0, 0x9b, 0x53}}
+
+TODO: potentially change GUID to sth. else e.g. KNOWNFOLDERID
+*/
+function genGUID(s) {
+  return "";
+}
+
 function gen_constants(consts, file) {
   curr += `// Section: constants (${len(consts)})\n`;
   curr += `const (\n`;
@@ -254,6 +573,9 @@ function gen_constants(consts, file) {
           v = numToHex(v);
         }
         curr += `  ${name} = ${v}\n`;
+        break;
+      case "string":
+        curr += `  ${name} = "${v}"\n`;
         break;
       case "float32":
       case "float64":
@@ -283,7 +605,8 @@ async function readAsJSON(path) {
  */
 async function save_go(name_json, s) {
   let name = name_json.toLowerCase();
-  name = name.replace(".json", ".go");
+  name = name.replace(/\./g, "_");
+  name = name.replace("_json", ".go");
   await Bun.write(name, s);
 }
 
@@ -400,10 +723,26 @@ async function process_all_files() {
 
 tests();
 
+async function gen_files_list() {
+  let s = "const files = [\n";
+  let files = await readdir(win32jsonDir, {});
+  for (let name of files) {
+    if (!name.endsWith(".json")) {
+      continue;
+    }
+    s += '  // "' + name + '"\n';
+  }
+  s += "];\n";
+  console.log(s);
+}
+
 if (true) {
-  await process_file("Foundation.json");
+  for (let f of files) {
+    await process_file(f);
+  }
 }
 if (false) {
+  await gen_files_list();
   await do_stats();
   await process_all_files();
 }

@@ -18,27 +18,6 @@ var (
 	SysN               = syscall.SyscallN
 )
 
-/*
-type LazyDLL struct {
-	mu   sync.Mutex
-	dll  *DLL // non nil once DLL is loaded
-	Name string
-}
-
-type LazyProc struct {
-	mu   sync.Mutex
-	Name string
-	l    *LazyDLL
-	proc *Proc
-}
-
-type Proc struct {
-	Dll  *DLL
-	Name string
-	addr uintptr
-}
-*/
-
 const (
 	DNS_TYPE_A = syscall.DNS_TYPE_A
 )
@@ -46,6 +25,7 @@ const (
 type Handle = syscall.Handle
 type Errno = syscall.Errno
 type SecurityAttributes = syscall.SecurityAttributes
+type GUID = syscall.GUID
 
 func errnoErr(e Errno) error {
 	return e

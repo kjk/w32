@@ -22,4 +22,9 @@ go.work
 
 # temporary
 foundation.go
+system_memory.go
+system_windowsprogramming.go
+
 *.skipped.txt
+funcs_by_dll.txt
+funcs_by_namespace.txt
