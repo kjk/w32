@@ -28,3 +28,6 @@ system_windowsprogramming.go
 *.skipped.txt
 funcs_by_dll.txt
 funcs_by_namespace.txt
+
+# TODO: temporary, we want to keep this for filtering purposes
+implemented_in_sys.txt
